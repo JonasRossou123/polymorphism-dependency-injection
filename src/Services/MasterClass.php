@@ -7,10 +7,11 @@ use App\Services\Dasher;
 use App\Services\Logger;
 use App\Services\TransformInterface;
 
-Class MasterClass
+class MasterClass
 {
-private TransformInterface $transformer;
-private Logger $logger;
+    private TransformInterface $transformer;
+    private Logger $logger;
+
 
     /**
      * MasterClass constructor.
@@ -21,9 +22,10 @@ private Logger $logger;
         $this->logger = $logger;
     }
 
-    public function processor($string){
-        $this->logger->log($this-> transformer -> transform  ($string));
-        return $this-> transformer -> transform($string);
+    public function processor($string)
+    {
+        $this->logger->log($this->transformer->transform($string));
+        return $this->transformer->transform($string);
     }
 
 }

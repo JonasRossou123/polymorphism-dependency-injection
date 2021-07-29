@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Services\Capitalizer;
 use App\Services\Dasher;
+use App\Services\DasherCapitalizer;
 use App\Services\Logger;
 use App\Services\MasterClass;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,7 +26,6 @@ class LearningController extends AbstractController
     public function index(Request $request): Response
     {
 
-
         $form = $this->createFormBuilder()
             ->add('message', TextType::class)
             ->add('transform', ChoiceType::class, [
@@ -44,27 +44,25 @@ class LearningController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $task = $form->getData();
 
-        switch ($task['transform']) {
-            case 0:
-                $mc = new MasterClass(new Dasher(), new Logger());
-                $message = $mc->processor($task['message']);
-                break;
-            case 1:
-                $mc = new MasterClass(new Capitalizer(), new Logger());
-                $message = $mc->processor($task['message']);
-                break;
-            case 2:
-                $mc1 = new MasterClass(new Dasher(), new Logger());
-                $mc2 = new MasterClass(new Capitalizer(), new Logger());
-                $tempmessage = $mc1->processor($task['message']);
-                $message = $mc2->processor($tempmessage);
-                break;
+            switch ($task['transform']) {
+                case 0:
+                    $mc = new MasterClass(new Dasher(), new Logger());
+                    $message = $mc->processor($task['message']);
+                    break;
+                case 1:
+                    $mc = new MasterClass(new Capitalizer(), new Logger());
+                    $message = $mc->processor($task['message']);
+                    break;
+                case 2:
+                    $mc = new MasterClass(new DasherCapitalizer(new Dasher(), new Capitalizer()), new Logger());
+                    $message = $mc->processor($task['message']);
+                    break;
+            }
         }
-
         return $this->render('learning/index.html.twig', [
             'controller_name' => 'LearningController',
             'form' => $form->createView(),
             'message' => $message
         ]);
-        }
+
 }}

@@ -6,6 +6,6 @@ Class Logger
 {
     public function log(string $message)
     {
-         error_log($message, 3, './log.info');
+         error_log($message."\n", 3, './log.info');
     }
 }
