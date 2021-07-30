@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-
 use App\Services\Capitalizer;
 use App\Services\Dasher;
 use App\Services\DasherCapitalizer;
@@ -12,7 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-
 use Symfony\Component\Form\Test\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +23,6 @@ class LearningController extends AbstractController
      */
     public function index(Request $request): Response
     {
-
         $form = $this->createFormBuilder()
             ->add('message', TextType::class)
             ->add('transform', ChoiceType::class, [
@@ -64,5 +61,4 @@ class LearningController extends AbstractController
             'form' => $form->createView(),
             'message' => $message
         ]);
-
 }}
